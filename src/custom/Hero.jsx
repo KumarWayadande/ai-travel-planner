@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
 function Hero() {
   return (
@@ -12,7 +13,9 @@ function Hero() {
         Your personalized trip planner and travel curator, creating custom
         places tailored to your interests and budget.
       </p>
-      <Button>Get Started, It&apos; Free!</Button>
+      <Link to={"/create-trip"}>
+        <Button>Get Started, It&apos; Free!</Button>
+      </Link>
     </div>
   );
 }
