@@ -1,5 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -21,10 +22,13 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import axios from "axios";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../service/firebaseConfig";
 
 function CreateTrip() {
   const [place, setPlace] = useState();
   const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({});
 
@@ -38,7 +42,7 @@ function CreateTrip() {
   };
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => GetUserProfile(tokenResponse)
+    onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
   });
 
   const GetUserProfile = (tokenInfo) => {
@@ -62,9 +66,7 @@ function CreateTrip() {
 
   const onGenerateTrip = async () => {
     const user = localStorage.getItem("user");
-    if (!user) {
-      setOpenDialog(true);
-    }
+    if (!user) setOpenDialog(true);
 
     if (
       formData?.noOfDays > 5 ||
@@ -76,6 +78,8 @@ function CreateTrip() {
       return;
     }
 
+    setLoading(true);
+
     const finalPrompt = AI_PROMPT.replace(
       "{location}",
       formData?.location.label
@@ -86,7 +90,22 @@ function CreateTrip() {
       .replace("{budget}", formData?.budget);
 
     const res = await chatSession.sendMessage(finalPrompt);
-    console.log(res.response.text());
+    setLoading(false);
+    // console.log(res.response.text());
+    saveAITrip(res.response.text());
+  };
+
+  const saveAITrip = async (tripData) => {
+    setLoading(true);
+    const tripId = new Date().toString();
+    const userData = JSON.parse(localStorage.getItem("user"));
+    await setDoc(doc(db, "AI-Trip-Information", tripId), {
+      userSelection: formData,
+      fetchedTripData: JSON.parse(tripData),
+      userData: userData,
+      id: tripId,
+    });
+    setLoading(false);
   };
 
   return (
@@ -171,8 +190,10 @@ function CreateTrip() {
         </div>
       </div>
       <div className="flex flex-row justify-end">
-        <Button className="mt-10" onClick={onGenerateTrip}>
-          Generate Trip
+        <Button disabled={loading} className="mt-10" onClick={onGenerateTrip}>
+          {`${loading ? `Loading...` : `Generate Trip`}`}
+          {/* {!loading && "Generate Trip"} */}
+          {/* {loading && <AiOutlineLoading3Quarters />} */}
         </Button>
       </div>
       <Dialog open={openDialog}>
