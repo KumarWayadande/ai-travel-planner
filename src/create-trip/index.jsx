@@ -24,11 +24,13 @@ import {
 import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../service/firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 function CreateTrip() {
   const [place, setPlace] = useState();
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
 
@@ -97,7 +99,7 @@ function CreateTrip() {
 
   const saveAITrip = async (tripData) => {
     setLoading(true);
-    const tripId = new Date().toString();
+    const tripId = Date.now().toString();
     const userData = JSON.parse(localStorage.getItem("user"));
     await setDoc(doc(db, "AI-Trip-Information", tripId), {
       userSelection: formData,
@@ -106,6 +108,7 @@ function CreateTrip() {
       id: tripId,
     });
     setLoading(false);
+    navigate("/view-trip/" + tripId);
   };
 
   return (
