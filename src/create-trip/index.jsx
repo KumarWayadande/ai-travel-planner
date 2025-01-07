@@ -3,7 +3,11 @@ import { useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { toast } from "sonner";
 import { Input } from "../components/ui/input";
-import { SelectBudgetOptions, SelectTravelsList } from "../constants/options";
+import {
+  AI_PROMPT,
+  SelectBudgetOptions,
+  SelectTravelsList,
+} from "../constants/options";
 import { Button } from "@/components/ui/button";
 function CreateTrip() {
   const [place, setPlace] = useState();
@@ -30,7 +34,16 @@ function CreateTrip() {
       return;
     }
 
-    console.log(formData);
+    const finalPrompt = AI_PROMPT.replace(
+      "{location}",
+      formData?.location.label
+    )
+      .replace("{totalDays}", formData?.noOfDays)
+      .replace("{totalDays}", formData?.noOfDays)
+      .replace("{traveler}", formData?.traveler)
+      .replace("{budget}", formData?.budget);
+
+    console.log(finalPrompt);
   };
 
   // useEffect(() => {
