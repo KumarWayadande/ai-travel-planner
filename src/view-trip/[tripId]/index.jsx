@@ -3,6 +3,7 @@ import { db } from "../../service/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import InfoSection from "../components/InfoSection";
 function Viewtrip() {
   const { tripId } = useParams();
   const [trip, setTrip] = useState();
@@ -24,12 +25,14 @@ function Viewtrip() {
     }
   };
 
-  return <div>
-    {/* Main Information */}
-    {/* Hotel Information */}
-    {/* Itenaries Information */}
-    {/* Footer */}
-  </div>;
+  return (
+    <div className="p-12 md:px-25 lg:px-44 xl:px:56">
+      <InfoSection trip={trip} />
+      {/* <Hotels trip />
+      <TripPlace trip />
+      <Footer trip /> */}
+    </div>
+  );
 }
 
 export default Viewtrip;
