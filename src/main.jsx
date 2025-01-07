@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { StrictMode } from "react";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -14,8 +15,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Header />
-    <RouterProvider router={router} />
-    <Toaster />
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
+      <Header />
+      <RouterProvider router={router} />
+      <Toaster />
+    </GoogleOAuthProvider>
   </StrictMode>
 );

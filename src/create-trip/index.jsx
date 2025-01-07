@@ -44,15 +44,9 @@ function CreateTrip() {
       .replace("{traveler}", formData?.traveler)
       .replace("{budget}", formData?.budget);
 
-    // console.log(finalPrompt);
-
     const res = await chatSession.sendMessage(finalPrompt);
     console.log(res.response.text());
   };
-
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
 
   return (
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 pb-20">
@@ -81,6 +75,7 @@ function CreateTrip() {
             How many days for the trip?
           </h2>
           <Input
+            min="1"
             type="number"
             placeholder="Ex.3"
             onChange={(e) => {
