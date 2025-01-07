@@ -1,17 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { Input } from "../components/ui/input";
-import { SelectBudgetOptions } from "../constants/options";
+import { SelectBudgetOptions, SelectTravelsList } from "../constants/options";
+import { Button } from "@/components/ui/button";
 function CreateTrip() {
   const [place, setPlace] = useState();
-  console.log(place);
+
+  const [formData, setFormData] = useState({});
+
+  const handleInputChange = (name, value) => {
+    setFormData((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value,
+      };
+    });
+  };
+
+  const onGenerateTrip = () => {
+    if (formData?.noOfDays > 5) {
+      return;
+    }
+
+    console.log(formData);
+  };
+
+  // useEffect(() => {
+  //   console.log(formData);
+  // }, [formData]);
 
   return (
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10 pb-20">
       <h2 className="font-bold text-3xl">Tell us your travel preferences</h2>
       <p className="mt-3 text-gray-500 text-xl">
         Just provide some basic information and our trip planner will generate a
-        customized iltinery based on your preferences.
+        customized iltinery based on your preferences 🌴 🏕️
       </p>
 
       <div className="mt-20 flex flex-col gap-10">
@@ -22,7 +45,7 @@ function CreateTrip() {
               place,
               onChange: (v) => {
                 setPlace(v);
-                console.log(v);
+                handleInputChange("location", v);
               },
             }}
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
@@ -32,7 +55,13 @@ function CreateTrip() {
           <h2 className="text-xl my-3 font-medium">
             How many days for the trip?
           </h2>
-          <Input type="number" placeholder="Ex.3" />
+          <Input
+            type="number"
+            placeholder="Ex.3"
+            onChange={(e) => {
+              handleInputChange("noOfDays", e.target.value);
+            }}
+          />
         </div>
         <div>
           <h2 className="text-xl my-3 font-medium">What is your budget?</h2>
@@ -41,7 +70,10 @@ function CreateTrip() {
               return (
                 <div
                   key={index}
-                  className="p-4 border rounded-lg hover:shadow-lg"
+                  className={`p-4 border rounded-lg hover:shadow-lg ${
+                    formData.budget === item.title && `shadow-lg border-black`
+                  }`}
+                  onClick={() => handleInputChange("budget", item.title)}
                 >
                   <h1 className="text-4xl">{item.icon}</h1>
                   <h1 className="font-bold text-lg">{item.title}</h1>
@@ -51,6 +83,36 @@ function CreateTrip() {
             })}
           </div>
         </div>
+
+        <div>
+          <h2 className="text-xl my-3 font-medium">
+            Who do you plan to travel with on your next adventure?
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 mt-5">
+            {SelectTravelsList.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`p-4 border rounded-lg hover:shadow-lg ${
+                    formData.traveler === item.people &&
+                    `shadow-lg border-black`
+                  }`}
+                  onClick={() => handleInputChange("traveler", item.people)}
+                >
+                  <h1 className="text-4xl">{item.icon}</h1>
+                  <h1 className="font-bold text-lg">{item.title}</h1>
+                  <h1 className="text-sm text-gray-500">{item.desc}</h1>
+                  <h1 className="text-sm text-gray-500">{item.people}</h1>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-row justify-end">
+        <Button className="mt-10" onClick={onGenerateTrip}>
+          Generate Trip
+        </Button>
       </div>
     </div>
   );
