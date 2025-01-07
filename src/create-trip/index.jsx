@@ -9,6 +9,7 @@ import {
   SelectTravelsList,
 } from "../constants/options";
 import { Button } from "@/components/ui/button";
+import { chatSession } from "../service/AIModal";
 function CreateTrip() {
   const [place, setPlace] = useState();
 
@@ -23,7 +24,7 @@ function CreateTrip() {
     });
   };
 
-  const onGenerateTrip = () => {
+  const onGenerateTrip = async () => {
     if (
       formData?.noOfDays > 5 ||
       !formData?.location ||
@@ -43,7 +44,10 @@ function CreateTrip() {
       .replace("{traveler}", formData?.traveler)
       .replace("{budget}", formData?.budget);
 
-    console.log(finalPrompt);
+    // console.log(finalPrompt);
+
+    const res = await chatSession.sendMessage(finalPrompt);
+    console.log(res.response.text());
   };
 
   // useEffect(() => {
