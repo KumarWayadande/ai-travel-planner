@@ -20,6 +20,7 @@ import {
   DialogDescription,
   DialogHeader,
 } from "@/components/ui/dialog";
+import axios from "axios";
 
 function CreateTrip() {
   const [place, setPlace] = useState();
@@ -37,22 +38,27 @@ function CreateTrip() {
   };
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => console.log(tokenResponse),
+    onSuccess: (tokenResponse) => GetUserProfile(tokenResponse)
   });
 
-  const GetUserProfile=(tokenInfo)=>{
-    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?acess_token=${tokenInfo?.access_token}`,{
-      headers: {
-       Authorization: `Bearer ${tokenInfo?.access_token}`,
-       Accept:'Application/json'
-      }
-    }).then((resp) => {console.log(resp);
-      localStorage.setItem('user',JSON.stringify(resp.data));
-      setOpenDialog(false);
-      OnGenerateTrip();
-    })
-  }
-
+  const GetUserProfile = (tokenInfo) => {
+    axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenInfo?.access_token}`,
+            Accept: "Application/json",
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp);
+        localStorage.setItem("user", JSON.stringify(resp.data));
+        setOpenDialog(false);
+        onGenerateTrip();
+      });
+  };
 
   const onGenerateTrip = async () => {
     const user = localStorage.getItem("user");
