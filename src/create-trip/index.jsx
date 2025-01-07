@@ -1,4 +1,7 @@
+import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
+
+import { useGoogleLogin } from "@react-oauth/google";
 
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { toast } from "sonner";
@@ -16,7 +19,6 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 
 function CreateTrip() {
@@ -33,6 +35,24 @@ function CreateTrip() {
       };
     });
   };
+
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
+
+  const GetUserProfile=(tokenInfo)=>{
+    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?acess_token=${tokenInfo?.access_token}`,{
+      headers: {
+       Authorization: `Bearer ${tokenInfo?.access_token}`,
+       Accept:'Application/json'
+      }
+    }).then((resp) => {console.log(resp);
+      localStorage.setItem('user',JSON.stringify(resp.data));
+      setOpenDialog(false);
+      OnGenerateTrip();
+    })
+  }
+
 
   const onGenerateTrip = async () => {
     const user = localStorage.getItem("user");
@@ -155,8 +175,13 @@ function CreateTrip() {
             <DialogDescription className="">
               <img src="../../public/logo.svg" />
               <h2 className="text-2xl font-bold mt-8">Sign In with Google</h2>
-              <h2 className="text-lg">Sign In to this app using google authentication securely</h2>
-              <Button className="mt-6 w-full">Sign In with Google</Button>
+              <h2 className="text-lg">
+                Sign In to this app using google authentication securely
+              </h2>
+              <Button className="mt-6 w-full" onClick={login}>
+                <FcGoogle className="h-7 w-7" />
+                Sign In with Google
+              </Button>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
