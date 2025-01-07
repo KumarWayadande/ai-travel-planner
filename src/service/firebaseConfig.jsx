@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,10 +12,10 @@ const firebaseConfig = {
   projectId: "redux-dbdc0",
   storageBucket: "redux-dbdc0.firebasestorage.app",
   messagingSenderId: "866721506549",
-  appId: "1:866721506549:web:0900995eaac11da6bc91bc"
+  appId: "1:866721506549:web:0900995eaac11da6bc91bc",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
 
-export default app;
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
