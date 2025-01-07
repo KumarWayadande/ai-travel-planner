@@ -10,8 +10,18 @@ import {
 } from "../constants/options";
 import { Button } from "@/components/ui/button";
 import { chatSession } from "../service/AIModal";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 function CreateTrip() {
   const [place, setPlace] = useState();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const [formData, setFormData] = useState({});
 
@@ -25,6 +35,11 @@ function CreateTrip() {
   };
 
   const onGenerateTrip = async () => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      setOpenDialog(true);
+    }
+
     if (
       formData?.noOfDays > 5 ||
       !formData?.location ||
@@ -134,6 +149,18 @@ function CreateTrip() {
           Generate Trip
         </Button>
       </div>
+      <Dialog open={openDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogDescription className="">
+              <img src="../../public/logo.svg" />
+              <h2 className="text-2xl font-bold mt-8">Sign In with Google</h2>
+              <h2 className="text-lg">Sign In to this app using google authentication securely</h2>
+              <Button className="mt-6 w-full">Sign In with Google</Button>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
