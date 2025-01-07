@@ -1,6 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+// import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
