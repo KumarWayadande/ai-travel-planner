@@ -8,9 +8,11 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./create-trip/index.jsx";
 import Header from "./custom/Header.jsx";
+import Viewtrip from "./view-trip/[tripId]/index.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/create-trip", element: <CreateTrip /> },
+  { path: "/view-trip/:tripId", element: <Viewtrip /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
