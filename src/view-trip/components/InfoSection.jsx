@@ -2,8 +2,6 @@
 import { PiShareFatFill } from "react-icons/pi";
 import { Button } from "../../components/ui/button";
 function InfoSection({ trip }) {
-  console.log(trip);
-
   return (
     <div>
       <img
