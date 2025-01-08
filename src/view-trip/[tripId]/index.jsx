@@ -27,10 +27,14 @@ function Viewtrip() {
 
   return (
     <div className="p-12 md:px-25 lg:px-44 xl:px:56">
+    {/* INformation Section */}
       <InfoSection trip={trip} />
-      {/* <Hotels trip />
-      <TripPlace trip />
-      <Footer trip /> */}
+
+      {/* Recommended Hotels */}
+
+      {/* Days Plan for trip */}
+
+      {/* Footer */}
     </div>
   );
 }

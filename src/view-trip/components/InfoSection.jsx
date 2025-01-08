@@ -1,27 +1,7 @@
-import { useEffect, useState } from "react";
-import { GetPlaceDetails, PHOTO_REF_URL } from "@/service/GlobalApi";
+
 
 function InfoSection({ trip }) {
-  const [photoUrl, setPhotoUrl] = useState();
-
-  useEffect(() => {
-    trip && GetPlaceImg();
-  }, [trip]);
-
-  const GetPlaceImg = () => {
-    const data = {
-      textQuery: trip?.userSelection?.location.label,
-    };
-    GetPlaceDetails(data).then((resp) => {
-      // console.log(resp.data.places[0].photos[3].name)
-      const PhotoUrl = PHOTO_REF_URL.replace(
-        "{NAME}",
-        resp.data.places[0].photos[3].name
-      );
-      setPhotoUrl(PhotoUrl);
-    });
-  };
-
+  
   return (
     <div>
       <img
