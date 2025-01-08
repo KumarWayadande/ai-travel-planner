@@ -1,5 +1,4 @@
 import PlaceCardItem from "./PlaceCardItem";
-
 /* eslint-disable react/prop-types */
 function PlacesToVisit({ trip }) {
   return (
