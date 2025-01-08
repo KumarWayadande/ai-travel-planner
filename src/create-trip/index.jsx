@@ -1,6 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
-// import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -93,7 +92,6 @@ function CreateTrip() {
 
     const res = await chatSession.sendMessage(finalPrompt);
     setLoading(false);
-    // console.log(res.response.text());
     saveAITrip(res.response.text());
   };
 
@@ -195,8 +193,6 @@ function CreateTrip() {
       <div className="flex flex-row justify-end">
         <Button disabled={loading} className="mt-10" onClick={onGenerateTrip}>
           {`${loading ? `Loading...` : `Generate Trip`}`}
-          {/* {!loading && "Generate Trip"} */}
-          {/* {loading && <AiOutlineLoading3Quarters />} */}
         </Button>
       </div>
       <Dialog open={openDialog}>
