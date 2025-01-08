@@ -18,7 +18,6 @@ function Hotels({ trip }) {
                   className="rounded-xl"
                   // src={hotel.hotelImageUrl}
                   src="../../../public/road-trip-vacation.jpg"
-                  alt=""
                 />
 
                 <div className="my-2">
