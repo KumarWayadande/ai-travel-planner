@@ -1,7 +1,26 @@
 /* eslint-disable react/prop-types */
 import { PiShareFatFill } from "react-icons/pi";
 import { Button } from "../../components/ui/button";
+import { GetPlaceDetails } from "../../service/GlobalApi";
+import { useEffect } from "react";
 function InfoSection({ trip }) {
+
+
+  const getPlacePhoto = async () => {
+    const data = {
+      textQuery: trip?.userSelection?.location?.label,
+    };
+
+    const result = await GetPlaceDetails(data).then((res) => {
+      console.log("res", res);
+      return res;
+    });
+
+    console.log("result", result);
+  };
+
+  useEffect(() => getPlacePhoto(), []);
+
   return (
     <div>
       <img
