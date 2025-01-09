@@ -4,22 +4,21 @@ import { Button } from "../../components/ui/button";
 import { GetPlaceDetails } from "../../service/GlobalApi";
 import { useEffect } from "react";
 function InfoSection({ trip }) {
-
-
   const getPlacePhoto = async () => {
+    console.log(trip);
+
     const data = {
       textQuery: trip?.userSelection?.location?.label,
     };
 
-    const result = await GetPlaceDetails(data).then((res) => {
+    await GetPlaceDetails(data).then((res) => {
       console.log("res", res);
-      return res;
     });
-
-    console.log("result", result);
   };
 
-  useEffect(() => getPlacePhoto(), []);
+  useEffect(() => {
+    trip && getPlacePhoto();
+  }, [trip]);
 
   return (
     <div>
