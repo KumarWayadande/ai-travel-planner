@@ -1,7 +1,30 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { GetPlaceDetails, PHOTO_REF_URL } from "../../service/GlobalApi";
+import { useEffect, useState } from "react";
 
 function HotelCardItem({ hotel }) {
+  const [photoUrl, setPhotoUrl] = useState();
+
+  const getPlacePhoto = async () => {
+    const data = {
+      textQuery: hotel?.hotelName,
+    };
+
+    await GetPlaceDetails(data).then((resp) => {
+      const photoUrlTemp = PHOTO_REF_URL.replace(
+        "{NAME}",
+        resp.data.places[0].photos[3].name
+      );
+
+      setPhotoUrl(photoUrlTemp);
+    });
+  };
+
+  useEffect(() => {
+    hotel && getPlacePhoto();
+  }, [hotel]);
+
   return (
     <Link
       target="_blank"
@@ -10,8 +33,7 @@ function HotelCardItem({ hotel }) {
       <div className="cursor-pointer hover:scale-110 transition-all">
         <img
           className="rounded-xl"
-          // src={hotel.hotelImageUrl}
-          src="../../../public/road-trip-vacation.jpg"
+          src={photoUrl ? photoUrl : "../../../public/road-trip-vacation.jpg"}
         />
 
         <div className="my-2">
@@ -22,7 +44,7 @@ function HotelCardItem({ hotel }) {
         </div>
       </div>
     </Link>
-);
+  );
 }
 
 export default HotelCardItem;
