@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 function Header() {
   const userData = localStorage.getItem("user");
-  console.log(JSON.parse(userData));
+  const user = JSON.parse(userData);
 
   const handleSignUp = () => {
     alert("e");
@@ -16,7 +16,7 @@ function Header() {
       <div>
         {!userData && <Button onClick={handleSignIn}>Sign In</Button>}
         {userData && (
-          <div>
+          <div className="flex flex-row items-center gap-3">
             <Button
               variant="outline"
               className="rounded-full"
@@ -24,7 +24,11 @@ function Header() {
             >
               My Trips
             </Button>
-            <img src={userData.picture} alt="" />
+            <img
+              className="w-[35px] h-[35px] rounded-full"
+              src={user?.picture}
+              alt=""
+            />
           </div>
         )}
       </div>
