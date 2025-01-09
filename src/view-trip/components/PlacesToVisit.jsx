@@ -1,11 +1,13 @@
 import PlaceCardItem from "./PlaceCardItem";
 /* eslint-disable react/prop-types */
 function PlacesToVisit({ trip }) {
+  console.log(trip?.fetchedTripData?.itinerary);
+  
   return (
     <div>
       <h2 className="font-bold text-lg my-10">Place to visit</h2>
       <div>
-        {trip?.fetchedTripData?.itinerary.map((item, index) => {
+        {trip?.fetchedTripData?.itinerary?.map((item, index) => {
           return (
             <div key={index}>
               <h2 className="font-medium text-lg mt-10">Day {item.day}</h2>
