@@ -1,31 +1,6 @@
 /* eslint-disable react/prop-types */
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { GetPlaceDetails, PHOTO_REF_URL } from "../../service/GlobalApi";
 import HotelCardItem from "./HotelCardItem";
 function Hotels({ trip }) {
-  const [photoUrl, setPhotoUrl] = useState();
-
-  const getPlacePhoto = async (hotelName) => {
-    const data = {
-      textQuery: trip?.fetchedTripData?.hotelOptions?.label,
-    };
-
-    await GetPlaceDetails(data).then((resp) => {
-      const photoUrlTemp = PHOTO_REF_URL.replace(
-        "{NAME}",
-        resp.data.places[0].photos[3].name
-      );
-
-      setPhotoUrl(photoUrlTemp);
-    });
-  };
-
-  // useEffect(() => {
-  //   trip && getPlacePhoto();
-  // }, [trip]);
-
   return (
     <div>
       <h2 className="font-bold text-xl my-5">Hotels Recommendation</h2>
