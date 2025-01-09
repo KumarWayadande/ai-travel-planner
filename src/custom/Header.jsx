@@ -5,8 +5,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { googleLogout } from "@react-oauth/google";
+// import { useNavigate } from "react-router-dom";
 
 function Header() {
+  // const navigate = useNavigate();
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
 
@@ -47,6 +49,7 @@ function Header() {
                     googleLogout();
                     localStorage.clear();
                     window.location.reload();
+                    // navigate("/");
                   }}
                 >
                   Logout
