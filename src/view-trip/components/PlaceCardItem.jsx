@@ -1,19 +1,43 @@
 // import { IoLocationSharp } from "react-icons/io5";
 // import { FaMapLocationDot } from "react-icons/fa6";
 // import { Button } from "../../components/ui/button";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { GetPlaceDetails, PHOTO_REF_URL } from "../../service/GlobalApi";
 
 /* eslint-disable react/prop-types */
 function PlaceCardItem({ place }) {
+  const [photoUrl, setPhotoUrl] = useState();
+
+  const getPlacePhoto = async () => {
+    const data = {
+      textQuery: place?.placeName,
+    };
+
+    await GetPlaceDetails(data).then((resp) => {
+      const photoUrlTemp = PHOTO_REF_URL.replace(
+        "{NAME}",
+        resp.data.places[0].photos[3].name
+      );
+
+      setPhotoUrl(photoUrlTemp);
+    });
+  };
+
+  useEffect(() => {
+    place && getPlacePhoto();
+  }, [place]);
+
   return (
     <Link
       to={`https://www.google.com/maps/search/?api=1&query=${place.placeName}`}
       target="_blank"
     >
-      <div className="shadow-md border rounded-xl p-3 flex flex-col md:flex-row gap-5">
+      <div className="hover:scale-105 transition-all shadow-md border rounded-xl p-3 flex flex-col md:flex-row gap-5">
         <img
-          className="w-[130px] h-[130px] rounded-xl"
-          src="../../../public/road-trip-vacation.jpg"
+          className="w-[130px] h-[130px] rounded-xl object-cover"
+          src={photoUrl ? photoUrl : "../../../public/road-trip-vacation.jpg"}
+          // src="../../../public/road-trip-vacation.jpg"
         />
         <div>
           <h2 className="text-lg font-bold">{place.placeName}</h2>
