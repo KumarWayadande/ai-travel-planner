@@ -16,7 +16,6 @@ function InfoSection({ trip }) {
         "{NAME}",
         resp.data.places[0].photos[3].name
       );
-
     });
   };
 
