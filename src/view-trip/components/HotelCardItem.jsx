@@ -32,7 +32,7 @@ function HotelCardItem({ hotel }) {
     >
       <div className="cursor-pointer hover:scale-110 transition-all">
         <img
-          className="rounded-xl"
+          className="rounded-xl h-[170px] w-full object-cover"
           src={photoUrl ? photoUrl : "../../../public/road-trip-vacation.jpg"}
         />
 
