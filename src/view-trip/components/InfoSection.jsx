@@ -1,18 +1,24 @@
 /* eslint-disable react/prop-types */
 import { PiShareFatFill } from "react-icons/pi";
 import { Button } from "../../components/ui/button";
-import { GetPlaceDetails } from "../../service/GlobalApi";
-import { useEffect } from "react";
+import { GetPlaceDetails, PHOTO_REF_URL } from "../../service/GlobalApi";
+import { useEffect, useState } from "react";
 function InfoSection({ trip }) {
+  const [photoUrl, setPhotoUrl] = useState();
+  
+  
   const getPlacePhoto = async () => {
-    console.log(trip);
-
     const data = {
       textQuery: trip?.userSelection?.location?.label,
     };
 
-    await GetPlaceDetails(data).then((res) => {
-      console.log("res", res);
+    await GetPlaceDetails(data).then((resp) => {
+      // console.log("res", res);
+      const photoUrlTemp = PHOTO_REF_URL.replace(
+        "{NAME}",
+        resp.data.places[0].photos[3].name
+      );
+
     });
   };
 
