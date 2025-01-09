@@ -5,7 +5,7 @@ import { GetPlaceDetails, PHOTO_REF_URL } from "../../service/GlobalApi";
 import { useEffect, useState } from "react";
 function InfoSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState();
-  
+
   const getPlacePhoto = async () => {
     const data = {
       textQuery: trip?.userSelection?.location?.label,
@@ -16,6 +16,8 @@ function InfoSection({ trip }) {
         "{NAME}",
         resp.data.places[0].photos[3].name
       );
+
+      setPhotoUrl(photoUrlTemp);
     });
   };
 
