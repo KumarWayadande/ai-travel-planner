@@ -12,7 +12,6 @@ function InfoSection({ trip }) {
     };
 
     await GetPlaceDetails(data).then((resp) => {
-      // console.log("res", res);
       const photoUrlTemp = PHOTO_REF_URL.replace(
         "{NAME}",
         resp.data.places[0].photos[3].name
