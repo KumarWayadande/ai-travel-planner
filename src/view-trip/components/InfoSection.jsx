@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 function InfoSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState();
   
-  
   const getPlacePhoto = async () => {
     const data = {
       textQuery: trip?.userSelection?.location?.label,
