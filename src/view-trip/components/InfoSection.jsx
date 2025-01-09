@@ -30,7 +30,7 @@ function InfoSection({ trip }) {
       <img
         // src="../../../public/road-trip-vacation.jpg"
         src={photoUrl ? photoUrl : "../../../public/road-trip-vacation.jpg"}
-        className="h-[330px] w-full object-cover rounded-xl"
+        className="h-[300px] w-full object-cover rounded-xl"
       />
       <div className="flex justify-between flex-col md:flex-row">
         <div className="my-6 flex flex-col gap-2">
