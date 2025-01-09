@@ -1,4 +1,10 @@
 import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 function Header() {
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
@@ -24,11 +30,19 @@ function Header() {
             >
               My Trips
             </Button>
-            <img
-              className="w-[35px] h-[35px] rounded-full"
-              src={user?.picture}
-              alt=""
-            />
+
+            <Popover>
+              <PopoverTrigger>
+                <img
+                  className="w-[35px] h-[35px] rounded-full"
+                  src={user?.picture}
+                  alt=""
+                />
+              </PopoverTrigger>
+              <PopoverContent>
+                Place content for the popover here.
+              </PopoverContent>
+            </Popover>
           </div>
         )}
       </div>
