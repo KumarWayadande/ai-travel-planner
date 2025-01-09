@@ -4,6 +4,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { googleLogout } from "@react-oauth/google";
 
 function Header() {
   const userData = localStorage.getItem("user");
@@ -40,7 +41,16 @@ function Header() {
                 />
               </PopoverTrigger>
               <PopoverContent>
-                Place content for the popover here.
+                <h2
+                  className="cursor-pointer"
+                  onClick={() => {
+                    googleLogout();
+                    localStorage.clear();
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </h2>
               </PopoverContent>
             </Popover>
           </div>
