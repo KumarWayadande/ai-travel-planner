@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../service/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { toast } from "sonner";
@@ -8,10 +8,17 @@ import Hotels from "../components/Hotels";
 import PlacesToVisit from "../components/PlacesToVisit";
 import Footer from "../components/Footer";
 function Viewtrip() {
+  const navigate = useNavigate();
+  
+
   const { tripId } = useParams();
   const [trip, setTrip] = useState();
 
   useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      navigate("/");
+      window.location.reload();
+    }
     tripId && getTripData();
   }, [tripId]);
 
