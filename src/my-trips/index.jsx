@@ -1,9 +1,12 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../service/firebaseConfig";
+import UserTripCard from "./components/UserTripCard";
 function MyTrips() {
   const navigate = useNavigate();
+
+  const [userTrips, setUserTrips] = useState([]);
 
   useEffect(() => {
     getMyTripDetails();
@@ -16,22 +19,37 @@ function MyTrips() {
       return;
     }
     const userDetails = JSON.parse(user);
-    
 
     const q = query(
       collection(db, "AI-Trip-Information"),
       where("userData.email", "==", userDetails.email)
     );
+    setUserTrips([]);
     const querySnapshot = await getDocs(q);
     console.log(querySnapshot);
-    
+
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      setUserTrips((prev) => [...prev, doc.data()]);
     });
   };
 
-  return <div>My trips</div>;
+  return (
+    <div className='px-5 mt-12 sm:px-10 md:px-32 lg:px-56 xl:px-72"'>
+      <h2 className="font-bold text-3xl mb-10">My Trips</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 my-3">
+        {userTrips?.length > 0
+          ? userTrips.map((trip, index) => (
+              <UserTripCard trip={trip} key={index} />
+            ))
+          : [1, 2, 3, 4, 5, 6].map((item, index) => (
+              <div
+                key={index}
+                className="h-[200px] w-full bg-slate-200 animate-pulse rounded-xl"
+              ></div>
+            ))}
+      </div>
+    </div>
+  );
 }
 
 export default MyTrips;
