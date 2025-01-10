@@ -46,15 +46,17 @@ function Header() {
 
   return (
     <div className="p-3 shadow-sm flex justify-between items-center px-5">
-      <img src="../../public/logo.svg" />
+      <a href="/">
+        <img src="../../public/logo.svg" />
+      </a>
       <div>
         {!userData && <Button onClick={handleSignIn}>Sign In</Button>}
         {userData && (
           <div className="flex flex-row items-center gap-3">
             <a href="/my-trips">
-            <Button variant="outline" className="rounded-full">
-              My Trips
-            </Button>
+              <Button variant="outline" className="rounded-full">
+                My Trips
+              </Button>
             </a>
 
             <Popover>
