@@ -51,9 +51,11 @@ function Header() {
         {!userData && <Button onClick={handleSignIn}>Sign In</Button>}
         {userData && (
           <div className="flex flex-row items-center gap-3">
+            <a href="/my-trips">
             <Button variant="outline" className="rounded-full">
               My Trips
             </Button>
+            </a>
 
             <Popover>
               <PopoverTrigger>
