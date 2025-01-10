@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import logo from "../../public/logo.svg"
 import {
   Popover,
   PopoverContent,
@@ -92,7 +93,7 @@ function Header() {
         <DialogContent>
           <DialogHeader>
             <DialogDescription className="">
-              <img src="../../public/logo.svg" />
+              <img src={logo} />
               <h2 className="text-2xl font-bold mt-8">Sign In with Google</h2>
               <h2 className="text-lg">
                 Sign In to this app using google authentication securely
