@@ -9,7 +9,7 @@ import CreateTrip from "./create-trip/index.jsx";
 import Header from "./custom/Header.jsx";
 import Viewtrip from "./view-trip/[tripId]/index.jsx";
 import MyTrips from "./my-trips/index.jsx";
-import Footer from "./view-trip/components/Footer.jsx";
+// import Footer from "./view-trip/components/Footer.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/create-trip", element: <CreateTrip /> },
