@@ -15,10 +15,10 @@ function Viewtrip() {
   const [trip, setTrip] = useState();
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) {
-      navigate("/");
-      window.location.reload();
-    }
+    // if (!localStorage.getItem("user")) {
+    //   navigate("/");
+    //   window.location.reload();
+    // }
     tripId && getTripData();
   }, [tripId]);
 
