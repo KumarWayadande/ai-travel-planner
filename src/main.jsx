@@ -9,9 +9,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./create-trip/index.jsx";
 import Header from "./custom/Header.jsx";
 import Viewtrip from "./view-trip/[tripId]/index.jsx";
+import MyTrips from "./my-trips/index.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/create-trip", element: <CreateTrip /> },
+  { path: "/my-trips", element: <MyTrips /> },
   { path: "/view-trip/:tripId", element: <Viewtrip /> },
 ]);
 
@@ -22,5 +24,5 @@ createRoot(document.getElementById("root")).render(
       <RouterProvider router={router} />
       <Toaster />
     </GoogleOAuthProvider>
-   </StrictMode>
+  </StrictMode>
 );
