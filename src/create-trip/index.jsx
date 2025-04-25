@@ -61,7 +61,7 @@ function CreateTrip() {
     );
 
     if (resp) {
-      console.log("GetUserProfile, resp", resp);
+      // console.log("GetUserProfile, resp", resp);
       localStorage.setItem("user", JSON.stringify(resp.data));
       setOpenDialog(false);
       setUserLoggedIn(true);
