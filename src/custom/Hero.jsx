@@ -6,7 +6,7 @@ function Hero() {
     <div className="flex flex-col items-center sm:mx-5 md:mx-56 gap-9">
       <h1 className="font-extrabold text-[50px] text-center mt-16">
         <span className="text-[#f56551]">
-          Discover your next adventure ti AI :
+          Discover your next adventure with AI :
         </span>{" "}
         Personalized ltineraries at Your Fingertips
       </h1>

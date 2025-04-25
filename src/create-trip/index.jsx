@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { useGoogleLogin } from "@react-oauth/google";
 
@@ -25,12 +25,14 @@ import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../service/firebaseConfig";
 import { useFetcher, useNavigate } from "react-router-dom";
+import { userContext } from "../context-api/context-handler";
 
 function CreateTrip() {
   const [place, setPlace] = useState();
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { isLoggedIn, setUserLoggedIn } = useContext(userContext);
 
   const [formData, setFormData] = useState({});
 
@@ -48,26 +50,6 @@ function CreateTrip() {
   });
 
   const GetUserProfile = async (tokenInfo) => {
-    // axios
-    //   .get(
-    //     `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}&loading=async`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${tokenInfo?.access_token}`,
-    //         Accept: "Application/json",
-    //       },
-    //     }
-    //   )
-    //   .then((resp) => {
-    //     console.log("GetUserProfile callded");
-    //     console.log(resp);
-    //     if (resp) {
-    //       localStorage.setItem("user", JSON.stringify(resp.data));
-    //       setOpenDialog(false);
-    //       onGenerateTrip();
-    //     }
-    //   });
-
     const resp = await axios.get(
       `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}&loading=async`,
       {
@@ -82,6 +64,7 @@ function CreateTrip() {
       console.log("GetUserProfile, resp", resp);
       localStorage.setItem("user", JSON.stringify(resp.data));
       setOpenDialog(false);
+      setUserLoggedIn(true);
       onGenerateTrip();
     }
   };
@@ -118,7 +101,7 @@ function CreateTrip() {
       return;
     }
 
-    if (!openDialog) {
+    if (localStorage.getItem('user')) {
       setLoading(true);
 
       const finalPrompt = AI_PROMPT.replace(

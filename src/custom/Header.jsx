@@ -14,9 +14,11 @@ import {
 } from "@/components/ui/dialog";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { userContext } from "../context-api/context-handler";
 
 function Header() {
+  const {isLoggedIn, setUserLoggedIn} = useContext(userContext);
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
   const [openDialog, setOpenDialog] = useState(false);
@@ -38,6 +40,7 @@ function Header() {
         console.log(resp);
         localStorage.setItem("user", JSON.stringify(resp.data));
         setOpenDialog(false);
+        setUserLoggedIn(true);
       });
   };
 
@@ -48,11 +51,12 @@ function Header() {
   return (
     <div className="p-3 shadow-sm flex justify-between items-center px-5">
       <a href="/">
-        <img src="../../public/logo.svg" />
+        {/* <img src="../../public/logo.svg" /> */}
+        <img className="h-7 sm:h-10" src="/Logo.png" alt="" />
       </a>
       <div>
-        {!userData && <Button onClick={handleSignIn}>Sign In</Button>}
-        {userData && (
+        {!isLoggedIn && <Button onClick={handleSignIn}>Sign In</Button>}
+        {isLoggedIn && (
           <div className="flex flex-row items-center gap-3">
             <a href="/my-trips">
               <Button variant="outline" className="rounded-full">
@@ -78,6 +82,7 @@ function Header() {
                   className="cursor-pointer"
                   onClick={() => {
                     googleLogout();
+                    setUserLoggedIn(false);
                     localStorage.clear();
                     window.location.reload();
                   }}

@@ -53,9 +53,9 @@ function InfoSection({ trip }) {
             </h2>
           </div>
         </div>
-        <Button>
+        {/* <Button>
           <PiShareFatFill />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
