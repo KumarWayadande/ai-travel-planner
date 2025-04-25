@@ -5,16 +5,19 @@ import { useEffect, useState } from "react";
 
 function HotelCardItem({ hotel }) {
   const [photoUrl, setPhotoUrl] = useState();
-
+  console.log(photoUrl);
+  
   const getPlacePhoto = async () => {
     const data = {
       textQuery: hotel?.hotelName,
     };
 
     await GetPlaceDetails(data).then((resp) => {
+      // console.log(resp);
+      
       const photoUrlTemp = PHOTO_REF_URL.replace(
         "{NAME}",
-        resp.data.places[0].photos[3].name
+        resp?.data?.places[0]?.photos[0]?.name
       );
 
       setPhotoUrl(photoUrlTemp);

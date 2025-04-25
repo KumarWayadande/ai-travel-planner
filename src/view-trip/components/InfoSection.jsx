@@ -5,21 +5,25 @@ import { GetPlaceDetails, PHOTO_REF_URL } from "../../service/GlobalApi";
 import { useEffect, useState } from "react";
 function InfoSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState();
-
+  // console.log(photoUrl);
+  
   const getPlacePhoto = async () => {
     const data = {
       textQuery: trip?.userSelection?.location?.label,
     };
 
     await GetPlaceDetails(data).then((resp) => {
+      // console.log(resp);
+      
       const photoUrlTemp = PHOTO_REF_URL.replace(
         "{NAME}",
-        resp.data.places[0].photos[3].name
+        resp?.data?.places[0]?.photos[0]?.name
       );
 
       setPhotoUrl(photoUrlTemp);
     });
   };
+// console.log(photoUrl);
 
   useEffect(() => {
     trip && getPlacePhoto();

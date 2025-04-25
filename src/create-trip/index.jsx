@@ -78,16 +78,34 @@ function CreateTrip() {
       }
     );
 
-    console.log(resp);
     if (resp) {
+      console.log("GetUserProfile, resp", resp);
       localStorage.setItem("user", JSON.stringify(resp.data));
       setOpenDialog(false);
       onGenerateTrip();
     }
   };
 
+  const saveAITrip = async (tripData) => {
+    setLoading(true);
+    const tripId = Date.now().toString();
+    const userData = JSON.parse(localStorage.getItem("user"));
+    console.log("user", userData);
+
+    await setDoc(doc(db, "AI-Trip-Information", tripId), {
+      userSelection: formData,
+      fetchedTripData: JSON.parse(tripData),
+      userData: userData,
+      id: tripId,
+    });
+    setLoading(false);
+    navigate("/view-trip/" + tripId);
+  };
+
   const onGenerateTrip = async () => {
     const user = localStorage.getItem("user");
+    console.log("onGenerateTrip, user", user);
+
     if (!user) setOpenDialog(true);
 
     if (
@@ -116,21 +134,6 @@ function CreateTrip() {
       setLoading(false);
       saveAITrip(res.response.text());
     }
-  };
-
-  
-  const saveAITrip = async (tripData) => {
-    setLoading(true);
-    const tripId = Date.now().toString();
-    const userData = JSON.parse(localStorage.getItem("user"));
-    await setDoc(doc(db, "AI-Trip-Information", tripId), {
-      userSelection: formData,
-      fetchedTripData: JSON.parse(tripData),
-      userData: userData,
-      id: tripId,
-    });
-    setLoading(false);
-    navigate("/view-trip/" + tripId);
   };
 
   return (
