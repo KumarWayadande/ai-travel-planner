@@ -13,9 +13,9 @@ import UserContextProvider from "./context-api/context-handler.jsx";
 // import Footer from "./view-trip/components/Footer.jsx";
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
-  { path: "/create-trip", element: <CreateTrip /> },
-  { path: "/my-trips", element: <MyTrips /> },
-  { path: "/view-trip/:tripId", element: <Viewtrip /> },
+  { path: "create-trip", element: <CreateTrip /> },
+  { path: "my-trips", element: <MyTrips /> },
+  { path: "view-trip/:tripId", element: <Viewtrip /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
