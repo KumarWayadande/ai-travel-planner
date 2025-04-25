@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+// import from "";
 import { toast } from "sonner";
 import { Input } from "../components/ui/input";
 import {
@@ -23,7 +24,7 @@ import {
 import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../service/firebaseConfig";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 
 function CreateTrip() {
   const [place, setPlace] = useState();
@@ -46,23 +47,43 @@ function CreateTrip() {
     onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
   });
 
-  const GetUserProfile = (tokenInfo) => {
-    axios
-      .get(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${tokenInfo?.access_token}`,
-            Accept: "Application/json",
-          },
-        }
-      )
-      .then((resp) => {
-        console.log(resp);
-        localStorage.setItem("user", JSON.stringify(resp.data));
-        setOpenDialog(false);
-        onGenerateTrip();
-      });
+  const GetUserProfile = async (tokenInfo) => {
+    // axios
+    //   .get(
+    //     `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}&loading=async`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${tokenInfo?.access_token}`,
+    //         Accept: "Application/json",
+    //       },
+    //     }
+    //   )
+    //   .then((resp) => {
+    //     console.log("GetUserProfile callded");
+    //     console.log(resp);
+    //     if (resp) {
+    //       localStorage.setItem("user", JSON.stringify(resp.data));
+    //       setOpenDialog(false);
+    //       onGenerateTrip();
+    //     }
+    //   });
+
+    const resp = await axios.get(
+      `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}&loading=async`,
+      {
+        headers: {
+          Authorization: `Bearer ${tokenInfo?.access_token}`,
+          Accept: "Application/json",
+        },
+      }
+    );
+
+    console.log(resp);
+    if (resp) {
+      localStorage.setItem("user", JSON.stringify(resp.data));
+      setOpenDialog(false);
+      onGenerateTrip();
+    }
   };
 
   const onGenerateTrip = async () => {
@@ -79,22 +100,25 @@ function CreateTrip() {
       return;
     }
 
-    setLoading(true);
+    if (!openDialog) {
+      setLoading(true);
 
-    const finalPrompt = AI_PROMPT.replace(
-      "{location}",
-      formData?.location.label
-    )
-      .replace("{totalDays}", formData?.noOfDays)
-      .replace("{totalDays}", formData?.noOfDays)
-      .replace("{traveler}", formData?.traveler)
-      .replace("{budget}", formData?.budget);
+      const finalPrompt = AI_PROMPT.replace(
+        "{location}",
+        formData?.location.label
+      )
+        .replace("{totalDays}", formData?.noOfDays)
+        .replace("{totalDays}", formData?.noOfDays)
+        .replace("{traveler}", formData?.traveler)
+        .replace("{budget}", formData?.budget);
 
-    const res = await chatSession.sendMessage(finalPrompt);
-    setLoading(false);
-    saveAITrip(res.response.text());
+      const res = await chatSession.sendMessage(finalPrompt);
+      setLoading(false);
+      saveAITrip(res.response.text());
+    }
   };
 
+  
   const saveAITrip = async (tripData) => {
     setLoading(true);
     const tripId = Date.now().toString();

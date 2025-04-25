@@ -30,7 +30,7 @@ function PlaceCardItem({ place }) {
 
   return (
     <Link
-      to={`https://www.google.com/maps/search/?api=1&query=${place.placeName}`}
+      to={`https://www.google.com/maps/search/?api=1&query=${place.placeName}&loading=async`}
       target="_blank"
     >
       <div className="hover:scale-105 transition-all shadow-md border rounded-xl p-3 flex flex-col md:flex-row gap-5">

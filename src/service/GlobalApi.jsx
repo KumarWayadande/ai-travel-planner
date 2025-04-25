@@ -17,4 +17,4 @@ export const GetPlaceDetails = (data) => {
 };
 export const PHOTO_REF_URL = `https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=600&maxWidthPx=600&key=${
   import.meta.env.VITE_GOOGLE_PLACE_API_KEY
-}`;
+}&loading=async`;

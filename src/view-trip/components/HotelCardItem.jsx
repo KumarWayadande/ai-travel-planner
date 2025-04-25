@@ -28,7 +28,7 @@ function HotelCardItem({ hotel }) {
   return (
     <Link
       target="_blank"
-      to={`https://www.google.com/maps/search/?api=1&query=${hotel.hotelName} ${hotel.hotelAddress}`}
+      to={`https://www.google.com/maps/search/?api=1&query=${hotel.hotelName} ${hotel.hotelAddress}&loading=async`}
     >
       <div className="cursor-pointer hover:scale-110 transition-all">
         <img
