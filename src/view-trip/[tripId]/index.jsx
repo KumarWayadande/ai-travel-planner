@@ -9,16 +9,14 @@ import PlacesToVisit from "../components/PlacesToVisit";
 import Footer from "../components/Footer";
 function Viewtrip() {
   const navigate = useNavigate();
-  
-
   const { tripId } = useParams();
   const [trip, setTrip] = useState();
 
   useEffect(() => {
-    // if (!localStorage.getItem("user")) {
-    //   navigate("/");
-    //   window.location.reload();
-    // }
+    if (!localStorage.getItem("user")) {
+      navigate("/");
+      window.location.reload();
+    }
     tripId && getTripData();
   }, [tripId]);
 
