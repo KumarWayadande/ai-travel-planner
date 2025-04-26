@@ -16,14 +16,14 @@ import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { userContext } from "../context-api/context-handler";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function Header() {
   const {isLoggedIn, setUserLoggedIn} = useContext(userContext);
   const userData = localStorage.getItem("user");
   const user = JSON.parse(userData);
   const [openDialog, setOpenDialog] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => GetUserProfile(tokenResponse),
   });
@@ -85,9 +85,10 @@ function Header() {
                   onClick={() => {
                     googleLogout();
                     setUserLoggedIn(false);
-                    navigate("/");
+                    // navigate("/");
                     localStorage.clear();
                     window.location.reload();
+                    window.location.replace("/");
                   }}
                 >
                   Logout
